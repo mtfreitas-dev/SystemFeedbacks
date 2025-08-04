@@ -1,0 +1,35 @@
+/* Estilo minimalista seguindo o padrão Salesforce */
+.feedback-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.submit-button {
+    background-color: #0176d3;
+    transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: #014486;
+}
+
+.thank-you-message {
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.thank-you-message p {
+    color: #032d60;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 480px) {
+    .feedback-form {
+        padding: 0 0.5rem;
+    }
+    
+    .thank-you-message {
+        padding: 1rem;
+    }
+}
