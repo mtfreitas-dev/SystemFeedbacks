@@ -1,5 +1,8 @@
 public with sharing class FeedbackTriggerHandler {
 
+    //Armazena os valores que serão manipulados
+    //Stores the values ​​that will be manipulated
+
     List<Feedback__c> oldRecords {get;set;}
     List<Feedback__c> newRecords {get;set;}
     Map<Id, Feedback__c> oldMap {get;set;}
@@ -12,7 +15,10 @@ public with sharing class FeedbackTriggerHandler {
         this.newMap = newMap;
     }
 
-    public static void beforeInsert(){
+    //Este método aciona outras funções quando a trigger na condição before insert é acionada
+    //This method triggers other functions when the trigger in the before insert condition is fired
 
+    public void beforeInsert(){
+        FeedbackHelper.ExternalFeedbackService(newRecords);
     }
 }
