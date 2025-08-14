@@ -1,0 +1,15 @@
+<template>
+    <h1 class="title">Feedbacks</h1>
+
+    <div class="feedback-grid">
+        <template for:each={feedbacks} for:item="fb">
+            <div key={fb.Id} class="feedback-card">
+                <h2 class="feedback-title">{fb.Name__c}</h2>
+                <p class="feedback-comment">{fb.ContactEmail__c}</p>
+                <p class="feedback-comment">{fb.Comment__c}</p>
+                <p class="feedback-comment">{fb.Sentiment__c}</p>
+                <span class="feedback-rating">⭐ {fb.Rating__c}</span>
+            </div>
+        </template>
+    </div>
+</template>

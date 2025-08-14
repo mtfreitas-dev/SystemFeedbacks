@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Componente Pai">
+        <div class="slds-p-around_medium">
+            <!--<lightning-input type="text" label="Mensagem" onchange={handleChange}></lightning-input>-->
+            <p>Mensagem: {messaggemEnviar}</p>
+
+            <c-filho onfiltrar={receberMensagem}></c-filho>
+        </div>
+    </lightning-card>
+</template>

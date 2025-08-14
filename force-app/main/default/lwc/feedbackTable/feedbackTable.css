@@ -1,0 +1,50 @@
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.feedback-card {
+    background: rgba(243, 241, 241, 0.803);
+    border-radius: 16px;
+    padding: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feedback-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.feedback-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-comment {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.8rem;
+}
+
+.feedback-rating {
+    display: inline-block;
+    background: #f0f4ff;
+    color: #0047ab;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}

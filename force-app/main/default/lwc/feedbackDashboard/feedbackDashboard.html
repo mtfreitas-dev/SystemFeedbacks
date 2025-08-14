@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title="Dashboard Feedback">
+        <div class="dashboard-container">
+            <!-- Tabela -->
+            <div class="dashboard-item">
+                <c-feedback-table></c-feedback-table>
+
+                <div class="dashboard-item button-container">
+                <lightning-button label="Filtrar" onclick={handleFiltrar} variant="brand"></lightning-button>
+            </div>
+            </div>
+
+            <!-- Filtro -->
+            <template if:true={filtrar}>
+                <div class="dashboard-item">
+                    <c-filter-dashboard></c-filter-dashboard>
+                </div>
+            </template>
+
+            <!-- Gráfico -->
+            <div class="dashboard-item">
+                <c-grafic-dashboard></c-grafic-dashboard>
+            </div>
+
+            <!-- Gráfico -->
+            <div class="dashboard-item">
+                <c-bar-grafic-dashboard></c-bar-grafic-dashboard>
+            </div>
+        </div>
+    </lightning-card>
+</template>
