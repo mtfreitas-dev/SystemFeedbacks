@@ -6,14 +6,17 @@
                 <c-feedback-table></c-feedback-table>
 
                 <div class="dashboard-item button-container">
-                <lightning-button label="Filtrar" onclick={handleFiltrar} variant="brand"></lightning-button>
+                
+                <template if:false={filtrar}>
+                    <lightning-button label="Filtrar" onclick={handleFiltrar} variant="brand"></lightning-button>
+                </template>
             </div>
             </div>
 
             <!-- Filtro -->
             <template if:true={filtrar}>
                 <div class="dashboard-item">
-                    <c-filter-dashboard></c-filter-dashboard>
+                    <c-filter-dashboard oncancel={handleFiltrar} onfiltrar={getData}></c-filter-dashboard>
                 </div>
             </template>
 
@@ -24,7 +27,7 @@
 
             <!-- Gráfico -->
             <div class="dashboard-item">
-                <c-bar-grafic-dashboard></c-bar-grafic-dashboard>
+                <c-bar-grafic-dashboard filterdata={data}></c-bar-grafic-dashboard>
             </div>
         </div>
     </lightning-card>

@@ -19,7 +19,7 @@ public with sharing class controller {
         }
 
         return feedbackData;
-    }
+    } 
 
     @AuraEnabled
     public static Map<String, Integer> getSentimentData(){
@@ -35,7 +35,24 @@ public with sharing class controller {
     }
 
     @AuraEnabled
-    public static string teste(){
-        return 'teste';
+    public static Map<String, Integer> getData(Integer days){
+
+        System.debug('Valor recebido ' + days);
+
+        Map<String, Integer> fbData = new Map<String, Integer>();
+
+        Datetime dateBase = System.now() - days;
+        System.debug('Dias calculdados ' + dateBase);
+
+        for(AggregateResult result : [SELECT Sentiment__c, COUNT(Id) total FROM Feedback__c WHERE CreatedDate >= :dateBase GROUP BY Sentiment__c]){
+            String rating = String.valueOf(result.get('Sentiment__c'));
+            Integer total = Integer.valueOf(result.get('total'));
+
+            fbData.put(rating, total);
+        }
+
+        System.debug('Mapa ' + fbData);
+
+        return fbData;
     }
 }

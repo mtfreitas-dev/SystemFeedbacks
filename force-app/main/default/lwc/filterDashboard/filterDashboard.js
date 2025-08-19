@@ -4,6 +4,8 @@ export default class FilterDashboard extends LightningElement {
 
     valuePeriod;
     valueCategory;
+    check;
+    
 
     periodOption = [
         { label: 'Últimos 7 dias', value: '7' },
@@ -18,12 +20,26 @@ export default class FilterDashboard extends LightningElement {
     ]
 
     handleChangePeriod(event){
-        this.value = event.detail.value;
-        window.alert('You have selected this value: ' + this.value);
+        this.valuePeriod = event.detail.value;
     }
 
     handleChangeCategory(event){
         this.valueCategory = event.detail.value;
-        window.alert('You have selected this value: ' + this.valueCategory);
+    }
+
+    sendData(){
+        this.dispatchEvent(new CustomEvent( 'filtrar', {
+            detail: {
+                period: this.valuePeriod,
+                category: this.valueCategory
+            }
+        }))
+    }
+
+    handleCancel(){
+        this.check = true;
+        this.dispatchEvent(new CustomEvent('cancel', {
+            detail: this.check
+        }))
     }
 }
