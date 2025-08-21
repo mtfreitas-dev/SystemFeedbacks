@@ -4,31 +4,28 @@
             <!-- Tabela -->
             <div class="dashboard-item">
                 <c-feedback-table></c-feedback-table>
-
-                <div class="dashboard-item button-container">
-                
-                <template if:false={filtrar}>
-                    <lightning-button label="Filtrar" onclick={handleFiltrar} variant="brand"></lightning-button>
-                </template>
-            </div>
             </div>
 
-            <!-- Filtro -->
+            <!-- Gráfico -->
+            <div class="dashboard-item">
+                <c-grafic-dashboard dados={barDonutGrafic}></c-grafic-dashboard>
+            </div>
+
+            <!-- Gráfico -->
+            <div class="dashboard-item">
+                <c-bar-grafic-dashboard filterdata={barGraficdata}></c-bar-grafic-dashboard>
+            </div>
+        </div>
+        <div class="dashboard-item button-container">
+            <template if:false={filtrar}>
+                <lightning-button label="Filtrar" onclick={handleFiltrar} variant="brand"></lightning-button>
+            </template>
+        </div>
+        <!-- Filtro -->
             <template if:true={filtrar}>
                 <div class="dashboard-item">
                     <c-filter-dashboard oncancel={handleFiltrar} onfiltrar={getData}></c-filter-dashboard>
                 </div>
             </template>
-
-            <!-- Gráfico -->
-            <div class="dashboard-item">
-                <c-grafic-dashboard></c-grafic-dashboard>
-            </div>
-
-            <!-- Gráfico -->
-            <div class="dashboard-item">
-                <c-bar-grafic-dashboard filterdata={data}></c-bar-grafic-dashboard>
-            </div>
-        </div>
     </lightning-card>
 </template>

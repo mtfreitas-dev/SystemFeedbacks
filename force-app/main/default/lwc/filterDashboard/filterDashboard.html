@@ -2,15 +2,14 @@
     <lightning-card title="Filtro">
         <div class="slds-p-around_medium">
             <lightning-combobox name="filterDashboardPeriod" label="Escolha um período" placeholder="Escolha uma opção"
-                options={periodOption} onchange={handleChangePeriod}></lightning-combobox>
+                options={periodOption} onchange={handleChangePeriod} multiselect="true"></lightning-combobox>
 
-            <lightning-combobox name="filterDashboardCategory" label="Escolha uma categoria"
-                placeholder="Escolha uma opção" options={categoryOption}
-                onchange={handleChangeCategory}></lightning-combobox>
+            <lightning-checkbox-group name="Categoria" label="Escolha uma categoria" options={options}  value={valueCategory} onchange={handleChangeCategory}></lightning-checkbox-group>
+
         </div>
         <div class="slds-p-around_medium">
             <lightning-button label="Filtrar" variant="brand" onclick={sendData}></lightning-button>
-            <lightning-button label="Cancelar" onclick={handleCancel} ></lightning-button>
+            <lightning-button label="Cancelar" onclick={handleCancel}></lightning-button>
         </div>
     </lightning-card>
 </template>

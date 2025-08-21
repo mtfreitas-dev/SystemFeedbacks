@@ -1,4 +1,4 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import chartJs from '@salesforce/resourceUrl/chartJs';
 import { loadScript } from 'lightning/platformResourceLoader';
 import getFeedbacksData from '@salesforce/apex/controller.getFeedbacksData';
@@ -6,56 +6,62 @@ import getFeedbacksData from '@salesforce/apex/controller.getFeedbacksData';
 export default class GraficDashboard extends LightningElement {
 
     chart;
-
     data;
-    realData;
+    carregouJs = false;
+    //@api dados;
 
-    renderedCallback(){
-        this.loadData();
+    @api set dados(dados) {
+        if (this.chart) {
+            this.chart.destroy();
+        }
+        //
+        this.data = dados ? Object.values(dados) : [0, 0, 0, 0, 0];
+
+        if(this.carregouJs == true){
+            this.renderChart(this.data);
+        }
+    };
+
+    get dados() {
+        this.data;
     }
 
-    loadData(){
+    renderedCallback() {
+        if(!this.carregouJs){
+            this.carregarScript();
+        }
+    }
+
+    carregarScript() {
+        loadScript(this, chartJs)
+            .then(() => {
+                this.loadData();
+                this.carregouJs = true;
+            })
+    }
+
+    loadData() {
         getFeedbacksData()
-        .then(data => {
-            this.data = Object.values(data);
-            this.renderChart(this.data);
-            console.log('Dados Sf', this.data);
-         })
-        .catch(error => {
-            console.log('Error ' + error);
-        })
+            .then(data => {
+                this.data = Object.values(data);
+                this.renderChart(this.data);
+            })
+            .catch(error => {
+                console.log('Error ' + error);
+            })
     }
 
     renderChart(data) {
-        loadScript(this, chartJs)
-            .then(() => {
-                const ctx = this.template.querySelector('canvas').getContext('2d');
-                this.chart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: ['⭐1','⭐2','⭐3','⭐4','⭐5'],
-                        datasets: [{
-                            data: this.data,
-                            backgroundColor: ['#5372d4ff', '#36ebe2ff', '#9ed3d4ff','#430d8aff', '#9315dbff']
-                        }]
-                    }
-                });
-            });
+        const ctx = this.template.querySelector('canvas').getContext('2d');
+        this.chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['⭐1', '⭐2', '⭐3', '⭐4', '⭐5'],
+                datasets: [{
+                    data: data,
+                    backgroundColor: ['#6A4C93', '#8E6CAB', '#7B6CF0', '#5A67D8', '#4C73D9']
+                }]
+            }
+        });
     }
 }
-
-
-    
-    /*@wire(getFeedbacksData)
-    feedbacks({ data }){
-        if(data){
-            //this.renderChart(Object.values(data));
-            console.log('Data ' + data);
-        }
-    }
-        
-    renderedCallback() {
-        if (this.chart) return; // evita criar várias vezes
-
-        loadScript(this, chartJs);
-    } */ 

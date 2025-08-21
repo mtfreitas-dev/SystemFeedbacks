@@ -77,7 +77,7 @@ export default class BarGraficDashboard extends LightningElement {
                 labels: ['Negative', 'Neutre', 'Positive'],
                 datasets: [{
                     data: this.data,
-                    backgroundColor: ['#19144eff', '#680f8eff', '#5b0b61ff', '#0b5e61ff']
+                    backgroundColor: ['#6A4C93', '#8E6CAB', '#7B6CF0']
                 }]
             },
             options: {
