@@ -3,6 +3,10 @@
     margin: 0 auto;
 }
 
+.grafic{
+    min-height: 300px;
+}
+
 .title {
     font-size: 1.8rem;
     font-weight: bold;
