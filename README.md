@@ -128,7 +128,8 @@ sfdx auth:web:login -a feedbackOrg
 sfdx force:org:create -s -f config/project-scratch-def.json -a feedbackOrg
 sfdx force:source:push
 
-# 4. Abra a org no na
+# 4. Abra a org no navegador
+sfdx force:org:open
 ```
 
 ---
