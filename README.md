@@ -1,20 +1,139 @@
-# Salesforce DX Project: Next Steps
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+# 📌 Sistema de Feedback
 
-## How Do You Plan to Deploy Your Changes?
+![GitHub last commit](https://img.shields.io/github/last-commit/SEU_USUARIO/sistema-feedback)
+![GitHub issues](https://img.shields.io/github/issues/SEU_USUARIO/sistema-feedback)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/SEU_USUARIO/sistema-feedback)
+![GitHub](https://img.shields.io/github/license/SEU_USUARIO/sistema-feedback)
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+Este projeto é um **Sistema de Feedback** desenvolvido na **Salesforce**, que permite coletar, analisar e visualizar feedbacks de clientes utilizando integração com a **API de Sentimento do Google** e componentes **Lightning Web Components (LWC)**.
 
-## Configure Your Salesforce DX Project
+---
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+## ✅ Funcionalidades Principais
 
-## Read All About It
+- **Coleta de Feedback**:
+  - Formulário responsivo com:
+    - Avaliação (**1 a 5 estrelas**)
+    - Categoria (**Produto, Suporte, Entrega**)
+    - Comentário
+    - E-mail (opcional)
+  - Validação em tempo real:
+    - Rating obrigatório
+    - Comentário mínimo de 10 caracteres
+  - Envio com **Spinner** e **Toast de confirmação**
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+- **Análise de Sentimento**:
+  - Integração com **Google Cloud Natural Language API**
+  - Atualiza automaticamente o campo **Sentiment__c** com:
+    - Positivo
+    - Neutro
+    - Negativo
 
-## TESTANDO PUSH
+- **Dashboard de Insights**:
+  - **Gráfico de Sentimentos** (Pizza): % Positivo / Neutro / Negativo
+  - **Lista de Feedbacks Críticos** (Negativos) com botão **Criar Caso**
+  - **Média por Categoria** (Gráfico de Barras)
+  - Filtros por **período (7/30/90 dias)** e **categoria**
+  - Implementação via **Chart.js**
+
+- **Automações**:
+  - Feedback Positivo (Rating ≥ 4):
+    - E-mail de agradecimento com cupom (PDF gerado via Apex)
+  - Feedback Negativo:
+    - Criação automática de **Caso**
+    - Atribuição à fila de **Suporte Crítico**
+    - **Notificação em tempo real no Slack**
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- **Salesforce Platform**
+  - Apex (Lógica e Integração com API)
+  - Lightning Web Components (UI)
+  - Flows e Triggers
+- **Google Cloud Natural Language API** (Análise de Sentimento)
+- **Chart.js** (Gráficos em LWC)
+- **Slack API** (Notificações)
+- **VS Code + Salesforce CLI**
+
+---
+
+## 📂 Estrutura do Projeto
+
+```
+/lwc
+  /feedbackForm          # Componente para envio de feedback
+  /feedbackDashboard     # Dashboard com gráficos e lista de feedbacks
+/apex
+  GoogleSentimentService # Classe para integração com API do Google
+  FeedbackHelper         # Classe para orquestrar a lógica de atualização
+/triggers
+  FeedbackTrigger        # Trigger para atualizar sentimento
+/tests
+  FeedbackHelperTest     # Testes de integração
+  GoogleSentimentMock    # Mock para chamadas HTTP
+```
+
+---
+
+## 🚀 Como Executar
+
+1. **Clonar o repositório**
+   ```bash
+   git clone https://github.com/seuusuario/sistema-feedback.git
+   cd sistema-feedback
+   ```
+
+2. **Autenticar na Salesforce**
+   ```bash
+   sfdx force:auth:web:login -a DevHub
+   ```
+
+3. **Criar um scratch org e instalar os metadados**
+   ```bash
+   sfdx force:org:create -s -f config/project-scratch-def.json -a feedbackOrg
+   sfdx force:source:push
+   ```
+
+4. **Definir variáveis de ambiente**
+   - Configurar **Chave de API do Google** no Custom Metadata ou Named Credentials.
+   - Configurar **Slack Webhook** (opcional).
+
+5. **Abrir org no navegador**
+   ```bash
+   sfdx force:org:open
+   ```
+
+---
+
+## ✅ Testes
+
+- **Cobertura mínima**: 90%
+- **Cenários**:
+  - Análise com feedback positivo, neutro e negativo
+  - Trigger em massa com 200 registros
+  - Simulação de falha na API
+
+---
+
+## 🔒 Segurança
+
+- Uso de **with sharing** e **SECURITY_ENFORCED** em SOQL
+- Tratamento de XSS com `String.escapeSingleQuotes()`
+- Proteção de dados sensíveis (API Key via Named Credentials)
+
+---
+
+## 📌 Roadmap
+
+- [ ] Implementar autenticação OAuth com Google
+- [ ] Adicionar suporte a múltiplos idiomas
+- [ ] Dashboard com filtros avançados
+- [ ] Notificações via Microsoft Teams
+
+---
+
+### ⚠️ **Aviso**
+As credenciais do documento original **não devem ser incluídas no repositório público**. Utilize variáveis de ambiente ou Named Credentials.
