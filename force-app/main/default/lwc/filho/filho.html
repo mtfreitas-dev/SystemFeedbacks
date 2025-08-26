@@ -1,0 +1,8 @@
+<template>
+    <lightning-combobox name="filterDashboardPeriod" label="Escolha um período" placeholder="Escolha uma opção"
+        options={periodOption} onchange={handleChangePeriod}></lightning-combobox>
+    <lightning-combobox name="filterDashboardCategory" label="Escolha uma categoria" placeholder="Escolha uma opção"
+        options={categoryOption} onchange={handleChangeCategory}></lightning-combobox>
+        
+    <lightning-button label="Mandar mensagem" onclick={enviarMensagem}></lightning-button>
+</template>

@@ -5,10 +5,12 @@ public with sharing class FeedbackHelper {
     public static void ExternalFeedbackService(List<Feedback__c> newRecords){
 
         for(Feedback__c fb : newRecords){
-            
             //Enfileira a execução do serviço de sentimento usando a interface Queueable
             //Queues the execution of the sentiment service using the Queueable interface
-            System.enqueueJob(new GoogleSentimentService(fb.Id, fb.Comment__c));
+            if(fb.Sentiment__c == null || fb.Sentiment__c == ''){
+                System.debug('Passei aqui');
+                System.enqueueJob(new GoogleSentimentService(fb.Id, fb.Comment__c));
+            }
         }
     }
 }

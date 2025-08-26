@@ -1,0 +1,17 @@
+.dashboard-container {
+    display: flex;
+    gap: 1rem; /* Espaço entre os itens */
+    flex-wrap: wrap; /* Quebra para linha nova se faltar espaço */
+    align-items: flex-start; /* Alinhamento no topo */
+}
+
+.dashboard-item {
+    flex: 1; /* Faz cada item ocupar espaço proporcional */
+    min-width: 300px; /* Evita ficar muito estreito */
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
