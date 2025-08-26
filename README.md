@@ -1,116 +1,140 @@
+# 📝 Sistema de Feedback - Salesforce
 
-# 📌 Sistema de Feedback
+Aplicação desenvolvida com **Lightning Web Components (LWC)** e **Apex**, hospedada na plataforma **Salesforce**, para **coleta e análise de feedbacks de clientes**, com integração à **Google Cloud Natural Language API** e automações para gerenciamento de satisfação.
 
-![GitHub last commit](https://img.shields.io/github/last-commit/SEU_USUARIO/sistema-feedback)
-![GitHub issues](https://img.shields.io/github/issues/SEU_USUARIO/sistema-feedback)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/SEU_USUARIO/sistema-feedback)
-![GitHub](https://img.shields.io/github/license/SEU_USUARIO/sistema-feedback)
-
-Este projeto é um **Sistema de Feedback** desenvolvido na **Salesforce**, que permite coletar, analisar e visualizar feedbacks de clientes utilizando integração com a **API de Sentimento do Google** e componentes **Lightning Web Components (LWC)**.
+> 💡 Projeto focado em boas práticas de desenvolvimento na Salesforce, com lógica desacoplada, testes automatizados e uso de Named Credentials para segurança de integrações.
 
 ---
 
-## ✅ Funcionalidades Principais
+## 🚀 Funcionalidades Principais
 
-- **Coleta de Feedback**:
-  - Formulário responsivo com:
-    - Avaliação (**1 a 5 estrelas**)
-    - Categoria (**Produto, Suporte, Entrega**)
-    - Comentário
-    - E-mail (opcional)
-  - Validação em tempo real:
-    - Rating obrigatório
-    - Comentário mínimo de 10 caracteres
-  - Envio com **Spinner** e **Toast de confirmação**
+- 🌟 **Formulário de Feedback**
+  - Avaliação de 1 a 5 estrelas
+  - Categoria do feedback: Produto, Suporte ou Entrega
+  - Comentário com mínimo de 10 caracteres
+  - E-mail (opcional)
+  - Toast de confirmação e spinner de carregamento
 
-- **Análise de Sentimento**:
-  - Integração com **Google Cloud Natural Language API**
-  - Atualiza automaticamente o campo **Sentiment__c** com:
+- 🧠 **Análise de Sentimento**
+  - Integração com **Google Natural Language API**
+  - Classificação automática do sentimento:
     - Positivo
     - Neutro
     - Negativo
 
-- **Dashboard de Insights**:
-  - **Gráfico de Sentimentos** (Pizza): % Positivo / Neutro / Negativo
-  - **Lista de Feedbacks Críticos** (Negativos) com botão **Criar Caso**
-  - **Média por Categoria** (Gráfico de Barras)
-  - Filtros por **período (7/30/90 dias)** e **categoria**
-  - Implementação via **Chart.js**
+- 📊 **Dashboard de Insights**
+  - Gráfico de Pizza: Distribuição de sentimentos
+  - Lista de feedbacks negativos com botão **Criar Caso**
+  - Gráfico de barras com média por categoria
+  - Filtros por período: 7, 30 ou 90 dias
 
-- **Automações**:
-  - Feedback Positivo (Rating ≥ 4):
-    - E-mail de agradecimento com cupom (PDF gerado via Apex)
-  - Feedback Negativo:
-    - Criação automática de **Caso**
-    - Atribuição à fila de **Suporte Crítico**
-    - **Notificação em tempo real no Slack**
+- ⚙️ **Automações Inteligentes**
+  - Feedback positivo (★ 4 ou 5): Envio de e-mail com cupom em PDF
+  - Feedback negativo: Criação automática de **Case** e notificação via **Slack**
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🧑‍💻 Tecnologias Utilizadas
 
-- **Salesforce Platform**
-  - Apex (Lógica e Integração com API)
-  - Lightning Web Components (UI)
-  - Flows e Triggers
-- **Google Cloud Natural Language API** (Análise de Sentimento)
-- **Chart.js** (Gráficos em LWC)
-- **Slack API** (Notificações)
-- **VS Code + Salesforce CLI**
+- Salesforce Lightning Web Components (LWC)
+- Apex (integrações, lógica, triggers)
+- Google Cloud Natural Language API
+- Chart.js para gráficos em LWC
+- Slack API para notificações
+- Salesforce CLI + VS Code
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📁 Estrutura do Projeto
 
-```
-/lwc
-  /feedbackForm          # Componente para envio de feedback
-  /feedbackDashboard     # Dashboard com gráficos e lista de feedbacks
-/apex
-  GoogleSentimentService # Classe para integração com API do Google
-  FeedbackHelper         # Classe para orquestrar a lógica de atualização
-/triggers
-  FeedbackTrigger        # Trigger para atualizar sentimento
-/tests
-  FeedbackHelperTest     # Testes de integração
-  GoogleSentimentMock    # Mock para chamadas HTTP
-```
+### 📦 Lightning Web Components (LWC)
+
+| Componente            | Descrição                                                       |
+|------------------------|-----------------------------------------------------------------|
+| `feedbackForm`         | Formulário de envio de feedback com validações                 |
+| `feedbackDashboard`    | Visualização de insights e gráficos com filtros                |
+
+### ⚙️ Classes Apex
+
+| Classe                  | Função                                                                     |
+|--------------------------|----------------------------------------------------------------------------|
+| `GoogleSentimentService`| Integra com API do Google para análise de sentimento                       |
+| `FeedbackHelper`        | Orquestra atualização do sentimento e lógicas derivadas                    |
+
+### 🔁 Triggers
+
+| Trigger           | Evento                        | Função                                                           |
+|-------------------|-------------------------------|------------------------------------------------------------------|
+| `FeedbackTrigger` | after insert, after update    | Chama serviço de sentimento e atualiza campo `Sentiment__c`      |
+
+### 🧪 Testes
+
+| Classe de Teste         | Objetivo                                                             |
+|--------------------------|----------------------------------------------------------------------|
+| `FeedbackHelperTest`     | Testa lógicas do helper e cobertura de cenários positivos/negativos |
+| `GoogleSentimentMock`    | Mock de respostas da API do Google para testes offline              |
 
 ---
 
-## 🚀 Como Executar
+## 📱 Interface Lightning Customizada
 
-1. **Clonar o repositório**
-   ```bash
-   git clone https://github.com/seuusuario/sistema-feedback.git
-   cd sistema-feedback
-   ```
+Aplicação configurada com **Lightning App Builder**, oferecendo páginas dedicadas para criação e análise de feedbacks em tempo real.
 
-2. **Autenticar na Salesforce**
-   ```bash
-   sfdx force:auth:web:login -a DevHub
-   ```
+### 🏠 Página Inicial
 
-3. **Criar um scratch org e instalar os metadados**
-   ```bash
-   sfdx force:org:create -s -f config/project-scratch-def.json -a feedbackOrg
-   sfdx force:source:push
-   ```
+- Dashboard com:
+  - Gráficos de sentimentos (Chart.js)
+  - Feedbacks negativos com botão **Criar Caso**
+  - Filtros por data e categoria
 
-4. **Definir variáveis de ambiente**
-   - Configurar **Chave de API do Google** no Custom Metadata ou Named Credentials.
-   - Configurar **Slack Webhook** (opcional).
+### 📄 Página de Detalhes do Feedback
 
-5. **Abrir org no navegador**
-   ```bash
-   sfdx force:org:open
-   ```
+- Layout otimizado para leitura rápida
+- Exibição de sentimento classificado e dados completos do cliente
+
+---
+
+## 🧪 Cobertura de Testes
+
+| Métrica              | Valor          |
+|----------------------|----------------|
+| Cobertura mínima     | ≥ 90%          |
+| Tipos de teste       | Unitário e integração |
+| Cenários abrangidos  | Casos positivos, neutros, negativos e falha na API |
+
+---
+
+## ⚙️ Como Executar
+
+Este projeto deve ser hospedado em uma **org Salesforce**.
+
+### 🚧 Pré-requisitos
+
+- Ter **Salesforce CLI** e **VS Code** instalados
+- Conta no **Google Cloud** com a **API Natural Language** ativada
+- Webhook configurado no **Slack** (opcional)
+
+### Passo a Passo
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/seuusuario/sistema-feedback.git
+cd sistema-feedback
+
+# 2. Autentique-se na sua org Salesforce (alias: feedbackOrg)
+sfdx auth:web:login -a feedbackOrg
+
+# 3. Crie um scratch org e instale os metadados
+sfdx force:org:create -s -f config/project-scratch-def.json -a feedbackOrg
+sfdx force:source:push
+
+# 4. Abra a org no na
 
 ---
 
 ## ✅ Testes
 
-- **Cobertura mínima**: 90%
+- **Cobertura**: 100%
 - **Cenários**:
   - Análise com feedback positivo, neutro e negativo
   - Trigger em massa com 200 registros
@@ -126,12 +150,7 @@ Este projeto é um **Sistema de Feedback** desenvolvido na **Salesforce**, que p
 
 ---
 
-## 📌 Roadmap
 
-- [ ] Implementar autenticação OAuth com Google
-- [ ] Adicionar suporte a múltiplos idiomas
-- [ ] Dashboard com filtros avançados
-- [ ] Notificações via Microsoft Teams
 
 ---
 
