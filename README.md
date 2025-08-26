@@ -56,23 +56,23 @@ Aplicação desenvolvida com **Lightning Web Components (LWC)** e **Apex**, hosp
 
 ### ⚙️ Classes Apex
 
-| Classe                  | Função                                                                     |
+| Classe                   | Função                                                                     |
 |--------------------------|----------------------------------------------------------------------------|
-| `GoogleSentimentService`| Integra com API do Google para análise de sentimento                       |
-| `FeedbackHelper`        | Orquestra atualização do sentimento e lógicas derivadas                    |
+| `GoogleSentimentService` | Integra com API do Google para análise de sentimento                       |
+| `FeedbackHelper`         | Orquestra atualização do sentimento e lógicas derivadas                    |
 
 ### 🔁 Triggers
 
-| Trigger           | Evento                        | Função                                                           |
-|-------------------|-------------------------------|------------------------------------------------------------------|
-| `FeedbackTrigger` | after insert, after update    | Chama serviço de sentimento e atualiza campo `Sentiment__c`      |
+| Trigger            | Evento                        | Função                                                           |
+|--------------------|-------------------------------|------------------------------------------------------------------|
+| `FeedbackTrigger`  | after insert, after update    | Chama serviço de sentimento e atualiza campo `Sentiment__c`      |
 
 ### 🧪 Testes
 
-| Classe de Teste         | Objetivo                                                             |
-|--------------------------|----------------------------------------------------------------------|
-| `FeedbackHelperTest`     | Testa lógicas do helper e cobertura de cenários positivos/negativos |
-| `GoogleSentimentMock`    | Mock de respostas da API do Google para testes offline              |
+| Classe de Teste        | Objetivo                                                             |
+|------------------------|----------------------------------------------------------------------|
+| `FeedbackHelperTest`   | Testa lógicas do helper e cobertura de cenários positivos/negativos |
+| `GoogleSentimentMock`  | Mock de respostas da API do Google para testes offline              |
 
 ---
 
@@ -130,14 +130,14 @@ sfdx force:source:push
 
 # 4. Abra a org no navegador
 sfdx force:org:open
-```
 
+```
 ---
 
 ## ✅ Testes
 
-- **Cobertura**: 100%
-- **Cenários**:
+- **Cobertura:** 100%
+- **Cenários:**
   - Análise com feedback positivo, neutro e negativo
   - Trigger em massa com 200 registros
   - Simulação de falha na API
@@ -146,15 +146,136 @@ sfdx force:org:open
 
 ## 🔒 Segurança
 
-- Uso de **with sharing** e **SECURITY_ENFORCED** em SOQL
+- Uso de `with sharing` e `SECURITY_ENFORCED` em SOQL
 - Tratamento de XSS com `String.escapeSingleQuotes()`
 - Proteção de dados sensíveis (API Key via Named Credentials)
 
 ---
 
+## 📌 Como Executar
 
+Este projeto deve ser hospedado em uma **org Salesforce**.
 
 ---
 
-### ⚠️ **Aviso**
-As credenciais do documento original **não devem ser incluídas no repositório público**. Utilize variáveis de ambiente ou Named Credentials.
+## ⚙️ Configuração Prévia Obrigatória
+
+Este projeto depende criticalmente da existência do objeto personalizado `Feedback` e seus campos específicos. Execute os passos abaixo **antes** de fazer o deploy do código.
+
+### Passo 1: Criar o Objeto Personalizado "Feedback"
+
+Acesse:
+
+Setup → Object Manager → Create → Custom Object
+
+Configure o objeto com:
+
+- **Label:** Feedback
+- **Plural Label:** Feedbacks
+- **Object Name:** Feedback
+
+Marque as opções:
+
+- ✅ Enable History Tracking  
+- ✅ Allow Reports  
+- ✅ Allow Activities  
+
+---
+
+### Passo 2: Criar Campos Customizados no Objeto Feedback
+
+| Label          | API Name           | Tipo              | Detalhes                                | Obrigatório |
+|----------------|--------------------|-------------------|-----------------------------------------|-------------|
+| Rating         | `Rating__c`        | Number (3, 1)     | Avaliação de 1 a 5 estrelas             | Sim         |
+| Comment        | `Comment__c`       | Text Area (Long)  | Comentário do cliente                   | Não         |
+| Category       | `Category__c`      | Picklist          | Valores: Product, Support, Delivery     | Não         |
+| Sentiment      | `Sentiment__c`     | Picklist          | Valores: Positive, Neutral, Negative    | Não         |
+| Contact Email  | `ContactEmail__c`  | Email             | E-mail para contato                     | Não         |
+
+---
+
+### Configuração dos Campos de Lista de Seleção
+
+#### Para `Category__c`:
+
+**Valores da picklist:**
+
+- Product (Produto)
+- Support (Suporte)
+- Delivery (Entrega)
+
+#### Para `Sentiment__c`:
+
+**Valores da picklist:**
+
+- Positive (Positivo)
+- Neutral (Neutro)
+- Negative (Negativo)
+
+---
+
+### Passo 3: Configurar Layouts e Permissões
+
+- Adicione **todos os campos** ao layout de página do objeto `Feedback`
+- Configure as **permissões de campo** para os perfis apropriados
+- Adicione o objeto `Feedback` aos **aplicativos desejados**
+
+---
+
+## 🚀 Instalação e Deploy
+
+Após confirmar que **todos os campos e picklists** foram criados corretamente, execute:
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/mtfreitas-dev/SystemFeedbacks.git
+cd SystemFeedbacks
+
+# 2. Autentique-se na sua org Salesforce
+sfdx auth:web:login -s -a myOrg
+
+# 3. Realize o deploy dos metadados
+sfdx force:source:deploy -p ./force-app/main/default -u myOrg
+
+ ```
+
+## 🔐 Permissões Pós-Instalação
+
+- Atribua os **Permission Sets** aos usuários finais
+- Verifique permissões de **objeto e campo** para cada perfil
+- Configure **sharing rules** se necessário
+
+---
+
+## ❌ Solução de Problemas Comuns
+
+### Erro: `"No such column 'Rating__c' on entity 'Feedback__c'"`
+
+- **Causa:** O campo `Rating__c` não foi criado.
+- **Solução:** Volte ao **Passo 2** e crie todos os campos corretamente.
+
+---
+
+### Erro: `"Invalid picklist value: Product in field: Category__c"`
+
+- **Causa:** O valor `Product` não existe na picklist do campo `Category__c`.
+- **Solução:** Edite a picklist e adicione os valores faltantes.
+
+---
+
+### App não funciona após instalação
+
+- **Causa:** Permissões insuficientes para o objeto ou campos.
+- **Solução:** Verifique e ajuste as **permissões de objeto e campo** nos perfis ou permission sets.
+
+---
+
+### Erro: `"sObject type 'Feedback__c' is not supported"`
+
+- **Causa:** O objeto `Feedback__c` não foi criado ou não está visível para o usuário.
+- **Solução:** Verifique se:
+  - O objeto foi **criado corretamente**
+  - Está **incluído nos aplicativos apropriados**
+  - O perfil do usuário tem **acesso de leitura/escrita**
+
+
