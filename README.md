@@ -40,7 +40,6 @@ Aplicação desenvolvida com **Lightning Web Components (LWC)** e **Apex**, hosp
 - Apex (integrações, lógica, triggers)
 - Google Cloud Natural Language API
 - Chart.js para gráficos em LWC
-- Slack API para notificações
 - Salesforce CLI + VS Code
 
 ---
