@@ -93,11 +93,11 @@ Aplicação configurada com **Lightning App Builder**, oferecendo páginas dedic
 
 | Componente | Descrição | Preview |
 |------------|-----------|---------|
-| `feedbackForm` | Formulário de coleta de feedbacks | ![Feedback Form](<img width="602" height="339" alt="image" src="https://github.com/user-attachments/assets/54109b58-ab3d-43ad-99b5-16165431829b" />
+| `feedbackForm` | Formulário de coleta de feedbacks | (<img width="602" height="339" alt="image" src="https://github.com/user-attachments/assets/54109b58-ab3d-43ad-99b5-16165431829b" />
 ) |
-| `feedbackList` | Lista de feedbacks com filtros | ![Feedback List](<img width="618" height="560" alt="image" src="https://github.com/user-attachments/assets/0b60c4b1-aa61-4c4f-977d-a371783e142f" />
+| `feedbackList` | Lista de feedbacks com filtros | (<img width="618" height="560" alt="image" src="https://github.com/user-attachments/assets/0b60c4b1-aa61-4c4f-977d-a371783e142f" />
 ) |
-| `feedbackDashboard` | Dashboard analítico | ![Dashboard](<img width="1209" height="624" alt="image" src="https://github.com/user-attachments/assets/75ec2b66-d161-475b-816d-1864da36faa9" />
+| `feedbackDashboard` | Dashboard analítico | (<img width="1209" height="624" alt="image" src="https://github.com/user-attachments/assets/75ec2b66-d161-475b-816d-1864da36faa9" />
 ) |
 
 ### 📄 Página de Detalhes do Feedback
