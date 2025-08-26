@@ -87,7 +87,7 @@ public with sharing class GoogleSentimentService implements Queueable, Database.
             //Log de erro e retorno de mensagem padrão em caso de falha
             //Error log and returning default message in case of failure
             System.debug('Erro na resposta da API: ' + res.getBody());
-            return 'Erro';
+            return 'Unable to analyze';
         }
     }
 }

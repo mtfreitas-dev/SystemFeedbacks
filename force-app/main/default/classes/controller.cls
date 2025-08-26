@@ -57,9 +57,9 @@ public with sharing class controller {
         System.debug('Categoria: ' + category);
         
         for(AggregateResult result : [SELECT Sentiment__c, COUNT(Id) total FROM Feedback__c WHERE CreatedDate >= :dtBase AND Category__c = :category GROUP BY Sentiment__c]){
-            String rating = String.valueOf(result.get('Sentiment__c'));
+            String sentiment = String.valueOf(result.get('Sentiment__c'));
             Integer total = Integer.valueOf(result.get('total'));
-            fbData.put(rating, total);
+            fbData.put(sentiment, total);
         }
         
         return fbData;
